@@ -1,0 +1,41 @@
+<h1>This module give historical graph about a currencies rate change.</h1>
+
+<p *ngIf="!exchangeRates"><em>Loading...</em></p>
+
+<div class="col-md-12">
+    <strong class="col-md-2">Select Currency: </strong>
+    <select class="col-md-2" [(ngModel)]="selectedCurrency" (ngModelChange)="refreshChart()">
+        <option *ngFor="let c of currencies" [ngValue]="c">{{c.name}}</option>
+    </select>
+</div>
+
+<h1>Ng2-Chart base graph</h1>
+<div *ngIf="lineChart">
+    <canvas baseChart width="300" height="100"
+            [datasets]="lineChart.lineChartData"
+            [labels]="lineChart.lineChartLabels"
+            [options]="lineChart.lineChartOptions"
+            [colors]="lineChart.lineChartColors"
+            [legend]="lineChart.lineChartLegend"
+            [chartType]="lineChart.lineChartType"
+            (chartHover)="lineChart.chartHovered($event)"
+            (chartClick)="lineChart.chartClicked($event)">
+    </canvas>
+</div>
+
+<div>
+    <table class='table' *ngIf="exchangeRates">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Rate</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let exchangeRate of exchangeRates">
+                <td>{{ exchangeRate.date | date }}</td>
+                <td>{{ exchangeRate.rate }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

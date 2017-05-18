@@ -1,0 +1,38 @@
+<h1>This module allow exchange between two currency.</h1>
+
+<p>The currency rate is the latest fetched from the server-side.</p>
+
+<p *ngIf="!currencies"><em>Loading...</em></p>
+
+<div class="col-md-12">
+    <strong class="col-md-1">From: </strong>
+    <select class="col-md-2" [(ngModel)]="from" (ngModelChange)="recalculate()">
+        <option *ngFor="let c of currencies" [ngValue]="c">{{c.name}}</option>
+    </select>
+    <strong class="col-md-1">Amount:</strong>
+    <input class="col-md-2" type="number" step="0.0001" [(ngModel)]="amount" (ngModelChange)="recalculate()" />
+</div>
+<div class="col-md-12">
+    <strong class="col-md-1">To: </strong>
+    <select class="col-md-2" [(ngModel)]="to" (ngModelChange)="recalculate()">
+        <option *ngFor="let c2 of currencies" [ngValue]="c2">{{c2.name}}</option>
+    </select>
+    <strong class="col-md-1">Result:</strong>
+    {{result | number:'1.1-4'}}
+</div>
+
+<p>For help this is the latest data: </p>
+<table class='table' *ngIf="currencies">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Rate</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let currency of currencies">
+            <td>{{ currency.name }}</td>
+            <td>{{ currency.rate | number:'1.1-4' }}</td>
+        </tr>
+    </tbody>
+</table>
